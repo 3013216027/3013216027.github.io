@@ -1,5 +1,45 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1">
+  <title>Welcome</title>
+  <link rel="stylesheet" href="//3013216027.github.io/static/css/style.css">
+</head>
 <body>
-<p>Yes</p>
+  <div id="markdown-content">
+  </div>
+  <div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+      <p class="navbar-text pull-right">&copy;Copyright 2017 by <a href='#'>dong</a>.</p>
+    </div>
+  </div>
+  <script src="//3013216027.github.io/static/js/showdown.min.js"></script>
+  <script>
+    const markdown = new showdown.Converter({
+      'strikethrough': 'true',
+      'tables': 'true',
+      'tasklists': 'true',
+    });
+    document.getElementById('markdown-content').innerHTML = markdown.makeHtml(getData());
+    function getData() {
+      return `
+## Welcome to dongua's huming world
+
+Here is some copy of data/software/else, only for download speed up or backup.
+
+BTW, my blog can be access from **[HERE](/blog)** :)
+
+----
+
+| File | Description |
+|:----:|:-----------:|
+| [t10k-images-idx3-ubyte.gz](/mnist/t10k-images-idx3-ubyte.gz), [t10k-labels-idx1-ubyte.gz](/mnist/t10k-labels-idx1-ubyte.gz), [train-images-idx3-ubyte.gz](/mnist/train-images-idx3-ubyte.gz), [train-labels-idx1-ubyte.gz](/mnist/train-labels-idx1-ubyte.gz) | Mnist database(mirror from [yann.lecun.com](http://yann.lecun.com/exdb/mnist)) |
+| [tju\_logo.zip](/download/tju\_logo.zip) | 天津大学矢量标志(logo和校名) |
+| [computer\_network\_2016\_review.rar](/download/computer\_network\_2016\_review.rar) | 计算机网络2016复习指南:) |
+
+        `;
+    }
+  </script>
 </body>
 </html>
