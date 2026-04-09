@@ -1,43 +1,819 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="initial-scale=1">
-  <title>Welcome</title>
-  <link rel="stylesheet" href="//3013216027.github.io/static/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dong 的个人主页 — AI 探索者、开发者">
+  <title>Dong · AI Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Reset & Variables ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1117;
+      --bg2:       #161b22;
+      --bg3:       #1c2128;
+      --border:    #30363d;
+      --text:      #e6edf3;
+      --text-muted:#8b949e;
+      --blue:      #58a6ff;
+      --purple:    #bc8cff;
+      --green:     #3fb950;
+      --orange:    #f0883e;
+      --pink:      #ff7b72;
+      --radius:    12px;
+      --shadow:    0 8px 32px rgba(0,0,0,.4);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ─── Animated Background ───────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 10%, rgba(88,166,255,.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(188,140,255,.07) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── Layout ────────────────────────────────────────────────── */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ─── Nav ───────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13,17,23,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+
+    /* ─── Hero ──────────────────────────────────────────────────── */
+    .hero {
+      padding: 80px 0 60px;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+    .avatar-wrap {
+      flex-shrink: 0;
+      position: relative;
+    }
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid var(--border);
+      box-shadow: 0 0 0 6px rgba(88,166,255,.12), var(--shadow);
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+    .status-dot {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      width: 18px;
+      height: 18px;
+      background: var(--green);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(63,185,80,.5); }
+      50%       { box-shadow: 0 0 0 8px rgba(63,185,80,0); }
+    }
+    .hero-text h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .hero-text h1 .name {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-text .tagline {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      min-height: 1.6em;
+    }
+    .typing-cursor {
+      display: inline-block;
+      width: 2px;
+      background: var(--blue);
+      animation: blink .7s infinite;
+      vertical-align: middle;
+      height: 1em;
+      margin-left: 2px;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .bio {
+      font-size: .95rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      max-width: 520px;
+      line-height: 1.7;
+    }
+    .bio strong { color: var(--text); }
+
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 10px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: .82rem;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .badge:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(88,166,255,.2);
+    }
+    .badge svg { width: 14px; height: 14px; }
+
+    /* ─── Section titles ────────────────────────────────────────── */
+    .section { padding: 48px 0; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .section-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .section-icon.blue  { background: rgba(88,166,255,.15); }
+    .section-icon.purple{ background: rgba(188,140,255,.15); }
+    .section-header h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+    .section-header p {
+      font-size: .85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 0 32px;
+    }
+
+    /* ─── Skills Grid ───────────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .skill-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      text-align: center;
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: all .2s;
+    }
+    .skill-card:hover {
+      border-color: var(--blue);
+      color: var(--text);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(88,166,255,.15);
+    }
+    .skill-card .skill-icon { font-size: 1.6rem; margin-bottom: 8px; }
+
+    /* ─── Trending Cards ────────────────────────────────────────── */
+    .trending-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .repo-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all .25s;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+    .repo-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--c1, var(--blue)), var(--c2, var(--purple)));
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .repo-card:hover {
+      border-color: rgba(88,166,255,.4);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+    .repo-card:hover::before { opacity: 1; }
+
+    .repo-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .repo-name {
+      font-weight: 600;
+      font-size: .95rem;
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .repo-name svg { opacity: .6; flex-shrink: 0; }
+    .repo-tag {
+      font-size: .72rem;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .tag-hot   { background: rgba(240,136,62,.15);  color: var(--orange); border: 1px solid rgba(240,136,62,.3); }
+    .tag-new   { background: rgba(63,185,80,.15);   color: var(--green);  border: 1px solid rgba(63,185,80,.3); }
+    .tag-agent { background: rgba(188,140,255,.15); color: var(--purple); border: 1px solid rgba(188,140,255,.3); }
+    .tag-tool  { background: rgba(88,166,255,.15);  color: var(--blue);   border: 1px solid rgba(88,166,255,.3); }
+
+    .repo-desc {
+      font-size: .88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .repo-footer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: .8rem;
+      color: var(--text-muted);
+    }
+    .repo-footer span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .lang-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* ─── News/Updates ──────────────────────────────────────────── */
+    .news-list { display: flex; flex-direction: column; gap: 12px; }
+    .news-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: all .2s;
+    }
+    .news-item:hover {
+      border-color: rgba(188,140,255,.4);
+      transform: translateX(4px);
+    }
+    .news-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      padding-top: 2px;
+      min-width: 70px;
+    }
+    .news-content { flex: 1; }
+    .news-title {
+      font-weight: 500;
+      font-size: .92rem;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+    .news-body { font-size: .85rem; color: var(--text-muted); line-height: 1.5; }
+    .news-tag {
+      font-size: .72rem;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      align-self: flex-start;
+    }
+
+    /* ─── Footer ────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: .85rem;
+    }
+    footer a { color: var(--blue); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ─── Responsive ────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .hero { flex-direction: column; align-items: flex-start; padding: 48px 0 40px; gap: 24px; }
+      .hero-text h1 { font-size: 1.7rem; }
+      .trending-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+      .nav-links { gap: 16px; }
+    }
+  </style>
 </head>
 <body>
-  <div id="markdown-content">
+
+<!-- ── Navigation ─────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">3013216027</a>
+    <ul class="nav-links">
+      <li><a href="#about">关于我</a></li>
+      <li><a href="#trending">AI 趋势</a></li>
+      <li><a href="#news">动态</a></li>
+    </ul>
   </div>
-  <div class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container">
-      <p class="navbar-text pull-right">&copy;Copyright 2017 by <a href='#'>dong</a>.</p>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────────── -->
+<div class="container">
+  <section class="hero" id="about">
+    <div class="avatar-wrap">
+      <img
+        class="avatar"
+        src="https://avatars.githubusercontent.com/u/8274579?v=4"
+        alt="Dong's avatar"
+      >
+      <span class="status-dot"></span>
     </div>
+    <div class="hero-text">
+      <h1>Hi, 我是 <span class="name">Dong</span> 👋</h1>
+      <p class="tagline"><span id="typing"></span><span class="typing-cursor"></span></p>
+      <p class="bio">
+        天津大学计算机系毕业 · 全栈开发者 · AI 爱好者。<br>
+        热衷于探索<strong>大模型技术</strong>与工程实践，关注 LLM Agent、RAG 和模型训练优化等前沿领域。
+        业余时间喜欢构建有趣的小工具，偶尔写写歌词滚动插件。
+      </p>
+      <div class="hero-badges">
+        <a href="https://github.com/3013216027" class="badge" target="_blank" rel="noopener">
+          <!-- GitHub icon -->
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.744 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          GitHub
+        </a>
+        <span class="badge">
+          <span>🎓</span> TJU · CS
+        </span>
+        <span class="badge">
+          <span>🐍</span> Python
+        </span>
+        <span class="badge">
+          <span>⚡</span> C++
+        </span>
+        <span class="badge">
+          <span>🌐</span> JavaScript
+        </span>
+        <span class="badge">
+          <span>🤖</span> AI / LLM
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Skills ──────────────────────────────────────────────── -->
+  <div class="divider"></div>
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon blue">⚡</div>
+      <div>
+        <h2>技术栈</h2>
+        <p>工具 & 语言</p>
+      </div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card"><div class="skill-icon">🐍</div>Python</div>
+      <div class="skill-card"><div class="skill-icon">⚙️</div>C / C++</div>
+      <div class="skill-card"><div class="skill-icon">🌐</div>JavaScript</div>
+      <div class="skill-card"><div class="skill-icon">🐚</div>Shell</div>
+      <div class="skill-card"><div class="skill-icon">🤗</div>HuggingFace</div>
+      <div class="skill-card"><div class="skill-icon">🔗</div>LangChain</div>
+      <div class="skill-card"><div class="skill-icon">🧠</div>PyTorch</div>
+      <div class="skill-card"><div class="skill-icon">🐳</div>Docker</div>
+      <div class="skill-card"><div class="skill-icon">🐧</div>Linux</div>
+      <div class="skill-card"><div class="skill-icon">📄</div>LaTeX</div>
+    </div>
+  </section>
+
+  <!-- ── Trending LLM Projects ───────────────────────────────── -->
+  <div class="divider"></div>
+  <section class="section" id="trending">
+    <div class="section-header">
+      <div class="section-icon purple">🔥</div>
+      <div>
+        <h2>大模型热门项目追踪</h2>
+        <p>持续关注 LLM 领域最前沿的开源进展</p>
+      </div>
+    </div>
+    <div class="trending-grid">
+
+      <a class="repo-card" href="https://github.com/deepseek-ai/DeepSeek-V3" target="_blank" rel="noopener"
+         style="--c1:#58a6ff;--c2:#bc8cff">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            deepseek-ai / DeepSeek-V3
+          </span>
+          <span class="repo-tag tag-hot">🔥 热门</span>
+        </div>
+        <p class="repo-desc">DeepSeek 最新一代混合专家模型，6710亿参数，在众多基准测试中超越 GPT-4o，完全开源。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#3572A5"></span>Python</span>
+          <span>⭐ 95k+</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/microsoft/BitNet" target="_blank" rel="noopener"
+         style="--c1:#f0883e;--c2:#ff7b72">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            microsoft / BitNet
+          </span>
+          <span class="repo-tag tag-new">🆕 前沿</span>
+        </div>
+        <p class="repo-desc">官方 1-bit LLM 推理框架，在 CPU 上实现极速推理，将大模型本地运行门槛降到最低。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#f34b7d"></span>C++</span>
+          <span>⭐ 18k+</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/unslothai/unsloth" target="_blank" rel="noopener"
+         style="--c1:#3fb950;--c2:#58a6ff">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            unslothai / unsloth
+          </span>
+          <span class="repo-tag tag-hot">🔥 热门</span>
+        </div>
+        <p class="repo-desc">Finetune Qwen3、Gemma4、DeepSeek 等主流开源模型，速度提升2x，显存减少70%。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#3572A5"></span>Python</span>
+          <span>⭐ 32k+</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/ollama/ollama" target="_blank" rel="noopener"
+         style="--c1:#bc8cff;--c2:#58a6ff">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            ollama / ollama
+          </span>
+          <span class="repo-tag tag-tool">🛠 工具</span>
+        </div>
+        <p class="repo-desc">一行命令本地运行 LLaMA、Mistral、Gemma 等大模型，支持 macOS、Linux 和 Windows。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#00ADD8"></span>Go</span>
+          <span>⭐ 100k+</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/bytedance/deer-flow" target="_blank" rel="noopener"
+         style="--c1:#bc8cff;--c2:#f0883e">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            bytedance / deer-flow
+          </span>
+          <span class="repo-tag tag-agent">🤖 Agent</span>
+        </div>
+        <p class="repo-desc">字节开源的长程 SuperAgent 框架，支持研究、编程、创作，集成沙箱、记忆、工具和子 Agent。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#3572A5"></span>Python</span>
+          <span>⭐ 8k+</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/langchain-ai/open-swe" target="_blank" rel="noopener"
+         style="--c1:#58a6ff;--c2:#3fb950">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            langchain-ai / open-swe
+          </span>
+          <span class="repo-tag tag-agent">🤖 Agent</span>
+        </div>
+        <p class="repo-desc">LangChain 开源的异步软件工程 Agent，基于 LangGraph 构建，可自主完成复杂编程任务。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#3572A5"></span>Python</span>
+          <span>⭐ 5k+</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/TauricResearch/TradingAgents" target="_blank" rel="noopener"
+         style="--c1:#f0883e;--c2:#bc8cff">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            TauricResearch / TradingAgents
+          </span>
+          <span class="repo-tag tag-agent">🤖 Agent</span>
+        </div>
+        <p class="repo-desc">多 Agent LLM 金融交易框架，模拟真实交易公司架构，多智能体协作分析市场并做决策。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#3572A5"></span>Python</span>
+          <span>⭐ 6k+</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/langflow-ai/openrag" target="_blank" rel="noopener"
+         style="--c1:#3fb950;--c2:#bc8cff">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            langflow-ai / openrag
+          </span>
+          <span class="repo-tag tag-tool">🛠 工具</span>
+        </div>
+        <p class="repo-desc">基于 Langflow、Docling 和 OpenSearch 的一体化开源 RAG 平台，快速构建知识库问答应用。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#3572A5"></span>Python</span>
+          <span>⭐ 3k+</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/microsoft/VibeVoice" target="_blank" rel="noopener"
+         style="--c1:#58a6ff;--c2:#ff7b72">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            microsoft / VibeVoice
+          </span>
+          <span class="repo-tag tag-new">🆕 前沿</span>
+        </div>
+        <p class="repo-desc">微软开源前沿语音 AI 项目，探索语音与大模型融合，实现自然对话交互能力。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#3572A5"></span>Python</span>
+          <span>⭐ 2k+</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/hacksider/Deep-Live-Cam" target="_blank" rel="noopener"
+         style="--c1:#ff7b72;--c2:#f0883e">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            hacksider / Deep-Live-Cam
+          </span>
+          <span class="repo-tag tag-hot">🔥 热门</span>
+        </div>
+        <p class="repo-desc">单张图片即可实时换脸 & 一键视频深度伪造，AIGC 多模态生成领域的热门工具项目。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#3572A5"></span>Python</span>
+          <span>⭐ 52k+</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/google-ai-edge/gallery" target="_blank" rel="noopener"
+         style="--c1:#3fb950;--c2:#58a6ff">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            google-ai-edge / gallery
+          </span>
+          <span class="repo-tag tag-new">🆕 前沿</span>
+        </div>
+        <p class="repo-desc">谷歌 AI Edge 展示端侧 ML/GenAI 用例的画廊，支持在设备上本地运行模型，无需联网。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#b07219"></span>Kotlin</span>
+          <span>⭐ 4k+</span>
+        </div>
+      </a>
+
+      <a class="repo-card" href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener"
+         style="--c1:#bc8cff;--c2:#3fb950">
+        <div class="repo-card-header">
+          <span class="repo-name">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM9 9h6M9 12h6M9 15h4"/></svg>
+            NousResearch / hermes-agent
+          </span>
+          <span class="repo-tag tag-agent">🤖 Agent</span>
+        </div>
+        <p class="repo-desc">随你成长的 AI Agent 框架，专注于工具调用与推理能力，支持自定义工作流编排。</p>
+        <div class="repo-footer">
+          <span><span class="lang-dot" style="background:#3572A5"></span>Python</span>
+          <span>⭐ 2k+</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ── LLM News ─────────────────────────────────────────────── -->
+  <div class="divider"></div>
+  <section class="section" id="news">
+    <div class="section-header">
+      <div class="section-icon blue">📡</div>
+      <div>
+        <h2>大模型近期动态</h2>
+        <p>2025 年 AI 领域重要里程碑</p>
+      </div>
+    </div>
+    <div class="news-list">
+      <div class="news-item">
+        <span class="news-date">2025-04</span>
+        <div class="news-content">
+          <div class="news-title">Qwen3 系列模型发布</div>
+          <div class="news-body">阿里云发布 Qwen3 全系列开源模型，旗舰版支持混合推理（思考/非思考切换），多项基准追平 GPT-4.1。</div>
+        </div>
+        <span class="repo-tag tag-hot" style="margin-top:0">🔥 热门</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2025-04</span>
+        <div class="news-content">
+          <div class="news-title">GPT-4.1 & o3 全面开放</div>
+          <div class="news-body">OpenAI 发布 GPT-4.1 和推理模型 o3，代码能力大幅提升，同时推出支持百万 token 的超长上下文版本。</div>
+        </div>
+        <span class="repo-tag tag-new" style="margin-top:0">🆕 前沿</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2025-03</span>
+        <div class="news-content">
+          <div class="news-title">Gemini 2.5 Pro 发布</div>
+          <div class="news-body">Google 发布 Gemini 2.5 Pro，在编程和数学基准上刷新纪录，原生支持 100万 token 上下文窗口。</div>
+        </div>
+        <span class="repo-tag tag-new" style="margin-top:0">🆕 前沿</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2025-03</span>
+        <div class="news-content">
+          <div class="news-title">Claude 3.7 Sonnet 引入扩展思考</div>
+          <div class="news-body">Anthropic 发布 Claude 3.7 Sonnet，首次引入"扩展思考"模式，推理能力接近 o1，成为编程助手首选。</div>
+        </div>
+        <span class="repo-tag tag-agent" style="margin-top:0">🤖 Agent</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">2025-01</span>
+        <div class="news-content">
+          <div class="news-title">DeepSeek-R1 震撼发布</div>
+          <div class="news-body">DeepSeek 开源 R1 推理模型，性能媲美 OpenAI o1，训练成本仅为数十分之一，引发全球关注。</div>
+        </div>
+        <span class="repo-tag tag-hot" style="margin-top:0">🔥 热门</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ── Footer ──────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <p>
+      Built with ❤️ by <a href="https://github.com/3013216027" target="_blank" rel="noopener">Dong</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/3013216027/3013216027.github.io" target="_blank" rel="noopener">Source</a>
+      &nbsp;·&nbsp;
+      © 2025
+    </p>
   </div>
-  <script src="//3013216027.github.io/static/js/showdown.min.js"></script>
-  <script>
-    const markdown = new showdown.Converter({
-      'strikethrough': 'true',
-      'tables': 'true',
-      'tasklists': 'true',
-    });
-    document.getElementById('markdown-content').innerHTML = markdown.makeHtml(getData());
-    function getData() {
-      return `
-## Welcome to dongua's huming world
+</footer>
 
-Blog can be access from **[HERE](//104.223.111.171/blog)** :)
+<script>
+  // Typing animation
+  (function () {
+    const phrases = [
+      'AI Engineer & Explorer 🤖',
+      '大模型玩家 & 开源贡献者 ✨',
+      'Building cool stuff with LLMs 🚀',
+      'TJU CS Graduate 🎓',
+    ];
+    const el = document.getElementById('typing');
+    let phraseIdx = 0, charIdx = 0, deleting = false;
 
-----
-
-| File | Description |
-|:----:|:-----------:|
-| [computer\_network\_2016\_review.rar](//104.223.111.171/download/computer\_network\_2016\_review.rar) | 计算机网络2016复习指南:) |
-| [tju\_logo.zip](//104.223.111.171/download/tju\_logo.zip) | 天津大学矢量标志(logo和校名) |
-| [t10k-images-idx3-ubyte.gz](//104.223.111.171/mnist/t10k-images-idx3-ubyte.gz), [t10k-labels-idx1-ubyte.gz](//104.223.111.171/mnist/t10k-labels-idx1-ubyte.gz), [train-images-idx3-ubyte.gz](//104.223.111.171/mnist/train-images-idx3-ubyte.gz), [train-labels-idx1-ubyte.gz](//104.223.111.171/mnist/train-labels-idx1-ubyte.gz) | Mnist database(mirror from [yann.lecun.com](http://yann.lecun.com/exdb//104.223.111.171/mnist)) |
-
-        `;
+    function tick() {
+      const phrase = phrases[phraseIdx];
+      if (!deleting) {
+        el.textContent = phrase.slice(0, ++charIdx);
+        if (charIdx === phrase.length) {
+          deleting = true;
+          setTimeout(tick, 2000);
+          return;
+        }
+      } else {
+        el.textContent = phrase.slice(0, --charIdx);
+        if (charIdx === 0) {
+          deleting = false;
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+        }
+      }
+      setTimeout(tick, deleting ? 40 : 75);
     }
-  </script>
+    tick();
+  })();
+
+  // Intersection Observer for card entrance animation
+  (function () {
+    const cards = document.querySelectorAll('.repo-card, .news-item, .skill-card');
+    cards.forEach(c => { c.style.opacity = '0'; c.style.transform += ' translateY(16px)'; });
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => {
+            e.target.style.transition = 'opacity .4s ease, transform .4s ease, border-color .25s, box-shadow .25s';
+            e.target.style.opacity = '1';
+            e.target.style.transform = e.target.style.transform.replace(' translateY(16px)', '');
+            obs.unobserve(e.target);
+          }, i * 50);
+        }
+      });
+    }, { threshold: 0.1 });
+    cards.forEach(c => obs.observe(c));
+  })();
+</script>
 </body>
 </html>
