@@ -799,14 +799,17 @@
   // Intersection Observer for card entrance animation
   (function () {
     const cards = document.querySelectorAll('.repo-card, .news-item, .skill-card');
-    cards.forEach(c => { c.style.opacity = '0'; c.style.transform += ' translateY(16px)'; });
+    cards.forEach(c => {
+      c.style.opacity = '0';
+      c.style.transform = 'translateY(16px)';
+    });
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
         if (e.isIntersecting) {
           setTimeout(() => {
             e.target.style.transition = 'opacity .4s ease, transform .4s ease, border-color .25s, box-shadow .25s';
             e.target.style.opacity = '1';
-            e.target.style.transform = e.target.style.transform.replace(' translateY(16px)', '');
+            e.target.style.transform = 'translateY(0)';
             obs.unobserve(e.target);
           }, i * 50);
         }
